@@ -10,8 +10,6 @@
 #include <Calculator.h>
 #include <stdio.h>
 #include <sstream>
-#include <fstream>
-#include <state.hxx>
 
 
 
@@ -29,7 +27,8 @@ class Settings{
    
     
     lv_obj_t *parent, *menu, *root_page, *sub_display_page, *sub_about_page;
-    
+    std::map<section*, std::vector<container*>> container_map;
+    std::map<page*, std::vector<section*>> section_map;
     public:
     
     Settings(lv_obj_t* parent):parent(parent),menu(lv_menu_create(parent)){
@@ -59,39 +58,6 @@ class Settings{
         softPwmWrite(5,(int)lv_slider_get_value(slider));
         std::cout << (int)lv_slider_get_value(slider) + "\n";
         #endif 
-    }
-
-   
-    template<typename MapVal>
-    void generic_add(
-        lv_obj_t* page, 
-        std::map<container*, MapVal>& m, 
-        MapVal const& val, 
-        std::function<void(container*, MapVal const&)> post_f,
-        lv_event_cb_t press_callback){
-     
-        container* con = create_container(section_map[page][1]);
-        m[con] = val; // add item to map.
-        
-        post_f(con, val);
-        lv_obj_add_flag(con, LV_OBJ_FLAG_CLICKABLE);
-        lv_obj_add_event_cb(con, press_callback, LV_EVENT_CLICKED, this);
-    }
-
-    void generic_remove(lv_obj_t* page){
-        if (section_map.find(page) == section_map.end())
-            return;
-        if (section_map[page].size() < 2) // wifi network has two sections
-            return;
-        auto sec = section_map[page][1];
-        if (container_map.find(sec) == container_map.end())
-            return;
-        auto& con = container_map[sec];
-        if (con.size() > 0){
-            network_map.erase(container_map[sec][con.size()-1]); // remove from network_map
-            lv_obj_del(container_map[sec][con.size()-1]);
-            container_map[sec].pop_back();
-        }
     }
 
     page* init_page(){

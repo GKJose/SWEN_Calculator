@@ -16,7 +16,7 @@ using namespace std;
 static lv_obj_t* textArea;
 #if ENABLE_MCP_KEYPAD
 static Keypad keypad;
-
+#endif
 /*Areas holds a list of pointers to the active text areas.
   (1 Input, 1 Output) = 1 Entry to the calculator.
   After 50 Entries the main screen clears to prevent memory overfill.
@@ -100,7 +100,7 @@ void Calculator::update(lv_timer_t * timer){
 	}else if(keypad.isPressed(ADD_BUTTON)){
 		//DO NOTHING
 	}else if(keypad.isPressed(ENTER_BUTTON)){
-		//ENTRY BUTTON
+		
 	}	
 	#endif
 }
@@ -117,40 +117,15 @@ void Calculator::main_screen_driver(lv_obj_t* parent, bool first_screen)
     lv_textarea_set_one_line(active_ta, true);
     lv_obj_set_width(active_ta, 320);
     lv_obj_align(active_ta, LV_ALIGN_BOTTOM_MID, 0, -10);
-    lv_obj_add_event_cb(active_ta, active_ta_event_handler, LV_EVENT_ALL);
+    lv_obj_add_event_cb(active_ta, active_ta_event_handler, LV_EVENT_ALL,nullptr);
     lv_obj_add_state(active_ta, LV_STATE_FOCUSED);
-
-    lv_keyboard_set_textarea(kb, active_ta); /*Focus it on one of the text areas to start*/
-
 	if(first_screen)
 	{
 		/*Create a button to toggle the keyboard*/
-		toggle_kb_btn = lv_btn_create(lv_scr_act());
-		lv_obj_add_flag(toggle_kb_btn,LV_OBJ_FLAG_CHECKABLE);
-		lv_obj_align(toggle_kb_btn, LV_ALIGN_TOP_RIGHT, 0, 0);
-		lv_color_t grey = lv_palette_main(LV_PALETTE_GREY);
-		lv_obj_set_style_bg_color(toggle_kb_btn, lv_palette_darken(LV_PALETTE_GREY, 3), 0);
-		lv_obj_set_size(toggle_kb_btn, 18, 18);
-		lv_obj_t* kb_img = lv_img_create(toggle_kb_btn);
-		lv_img_set_src(kb_img, LV_SYMBOL_KEYBOARD);
-		lv_obj_align_to(kb_img, NULL, LV_ALIGN_CENTER, 0, 0);
-		lv_obj_add_event_cb(toggle_kb_btn, Calculator::toggle_kb_event_handler, LV_EVENT_ALL, toggle_kb_btn);
-		/**/
-
-		/*Create a button to clear the screen manually*/
-		clear_scr_btn = lv_btn_create(lv_scr_act());
-		lv_obj_align(clear_scr_btn, LV_ALIGN_TOP_LEFT, 0, 0);
-		lv_obj_set_style_bg_color(clear_scr_btn, lv_palette_darken(LV_PALETTE_GREY, 3), 0);
-		lv_obj_set_size(clear_scr_btn, 18, 18);
-		lv_obj_t* clear_scr_img = lv_img_create(clear_scr_btn);
-		lv_img_set_src(clear_scr_img, LV_SYMBOL_CLOSE);
-		lv_obj_align_to(clear_scr_img, NULL, LV_ALIGN_CENTER, 0, 0);
-		lv_obj_add_event_cb(clear_scr_btn, Calculator::clear_scr_btn_event_handler, LV_EVENT_ALL, parent);
-		/**/
+	
 	}
 
     /*Put kb in view*/
-    lv_obj_align(kb, LV_ALIGN_BOTTOM_MID, 0, -10);
     lv_obj_scroll_by(parent, 0, 25, LV_ANIM_OFF);
 
 }
@@ -164,7 +139,6 @@ static void Calculator::active_ta_event_handler(lv_event_t* e)
     if (code == LV_EVENT_CLICKED || code == LV_EVENT_FOCUSED)
     {
         /*Focus on the clicked text area*/
-        if (kb != NULL) lv_keyboard_set_textarea(kb, ta);
 		lv_obj_scroll_to_view(ta, LV_ANIM_OFF);
 		lv_obj_scroll_by(parent, 0, 15, LV_ANIM_OFF);
     }
@@ -181,7 +155,11 @@ static void Calculator::active_ta_event_handler(lv_event_t* e)
 		
 
         const char *copy_input = lv_textarea_get_text(ta);
-        
+		if(isValidEquation(copy_input)){
+			//Solve equation
+		}else{
+			output = "ERROR: Invalid Equation.";
+		}
         /*Create the new text areas*/
         Calculator::lv_input_history_ta(parent, copy_input, ta);
 	    Calculator::lv_result_ta(parent, output, ta);
@@ -189,13 +167,6 @@ static void Calculator::active_ta_event_handler(lv_event_t* e)
         lv_textarea_set_text(ta, "");
         lv_obj_scroll_to_view(ta, LV_ANIM_OFF);
 
-        /*Put kb in view*/
-        lv_obj_align_to(kb, parent, LV_ALIGN_BOTTOM_MID, 0, 0);
-		lv_obj_scroll_to_view(kb, LV_ANIM_OFF);
-		if(!lv_obj_has_flag(kb, LV_OBJ_FLAG_HIDDEN))
-		{
-			lv_obj_set_y(ta, lv_obj_get_y_aligned(ta) - 80);
-		}
         lv_obj_scroll_by(parent, 0, 15, LV_ANIM_OFF);
     }
 
@@ -229,10 +200,6 @@ lv_obj_t* Calculator::lv_input_history_ta(lv_obj_t* parent, std::string input, l
     lv_obj_add_state(ta, LV_STATE_DEFAULT);
     lv_obj_scroll_by(parent, 0, 25, LV_ANIM_OFF);
     lv_textarea_set_text(ta, input.c_str());
-    if (!lv_obj_has_flag(kb, LV_OBJ_FLAG_HIDDEN))
-    {
-        lv_obj_set_y(ta, lv_obj_get_y_aligned(ta) - 80);
-    }
 	lv_obj_add_event_cb(ta, input_history_ta_event_handler, LV_EVENT_ALL, active_ta);
     return ta;
 
@@ -250,10 +217,6 @@ lv_obj_t* Calculator::lv_result_ta(lv_obj_t* parent, std::string output, lv_obj_
     lv_obj_add_state(ta, LV_STATE_DEFAULT); /*To be sure the cursor is visible*/
     lv_obj_set_style_text_align(ta, LV_TEXT_ALIGN_RIGHT, 0);
     lv_textarea_add_text(ta, output.c_str());
-    if (!lv_obj_has_flag(kb, LV_OBJ_FLAG_HIDDEN))
-    {
-        lv_obj_set_y(ta, lv_obj_get_y_aligned(ta) - 80);
-    }
 	lv_obj_add_event_cb(ta, input_history_ta_event_handler, LV_EVENT_ALL, active_ta);
     return ta;
 }
@@ -278,10 +241,10 @@ std::string Calculator::solveDecimalEquation(std::string equation)
 	std::vector<int> operands;
 	std::string output = "";
 	for(auto operand:m){
-		operands.push(std::stoi(operand));
+		operands.push_back(std::stoi(operand));
 	}
 	
-	regex regexp("[/,*,-,+]");
+	regexp = "[\\/,*,-,+]";
 	regex_search(equation,m,regexp);
 	
 	for(auto opt: m){
@@ -307,15 +270,14 @@ bool Calculator::isValidEquation(std::string equation){
 	 int8_t operandCount = 0;
 	 int8_t operatorCount = 0;
 	//Regex splits equation into tokens, which are the numbers
-	regex regexp("[A-Z0-9]+");
+	regex regexp("[A-Z0-9.]+");
 	smatch m;
 	regex_search(equation,m,regexp);
 	for(auto token: m){
 		operandCount++;
 	}
 	
-	regex regexp("[\/,*,-,+]+");
-	smatch m;
+	regexp = "[\\/,*,-,+]+";
 	regex_search(equation,m,regexp);
 	for(auto token: m){
 		operatorCount++;
