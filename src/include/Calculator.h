@@ -16,7 +16,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-
+#include <Util.h>
 namespace Calculator{
     void createDemo();
 	void update(lv_timer_t * timer);
@@ -28,10 +28,6 @@ namespace Calculator{
 	static void active_ta_event_handler(lv_event_t* e);
 	static void clear_scr_btn_event_handler(lv_event_t* e);
 	static void input_history_ta_event_handler(lv_event_t* e);
-	std::string convertDecimalToSEM(std::string number);
-	std::string convertDecimalToHex(std::string number);
-	std::string solveDecimalEquation(std::string equation);
-	bool isValidEquation(std::string equation);
 
 
 

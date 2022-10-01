@@ -3,13 +3,10 @@
 #include <string>
 #include <sstream>
 #include <unistd.h>
-#include <regex>
 #if ENABLE_MCP_KEYPAD
 #include <Keypad.hxx>
 #endif
-#if ENABLE_GIAC
-using namespace giac;
-#endif
+
 using namespace std;
 
 /*Declarations*/
@@ -25,7 +22,6 @@ lv_obj_t* areas[100];
 int total;
 
 static lv_obj_t* tabview;
-
 
 void Calculator::createDemo(){
 	tabview = lv_main_screen_tabs();
@@ -153,10 +149,11 @@ static void Calculator::active_ta_event_handler(lv_event_t* e)
 		// Set the solution to the string output, the rest of the code handles displaying the result
         string output = "";
 		
-
         const char *copy_input = lv_textarea_get_text(ta);
+		
 		if(isValidEquation(copy_input)){
-			//Solve equation
+			std::cout << "Equation is valid!";
+			output = solveEquation(copy_input);
 		}else{
 			output = "ERROR: Invalid Equation.";
 		}
@@ -221,67 +218,5 @@ lv_obj_t* Calculator::lv_result_ta(lv_obj_t* parent, std::string output, lv_obj_
     return ta;
 }
 
-std::string Calculator::convertDecimalToSEM(std::string number)
-{
-	//Convert the decimal to signed exponent mantissa
-}
 
-std::string Calculator::convertDecimalToHex(std::string number)
-{
-	//Convert decimal to hexidecimal
-}
-std::string Calculator::solveDecimalEquation(std::string equation)
-{
-	//Solve the equation provided
-	//Use regex to pull operators/operands
-	regex regexp("[0-9]+");
-	smatch m;
-	regex_search(equation,m,regexp);
-	
-	std::vector<int> operands;
-	std::string output = "";
-	for(auto operand:m){
-		operands.push_back(std::stoi(operand));
-	}
-	
-	regexp = "[\\/,*,-,+]";
-	regex_search(equation,m,regexp);
-	
-	for(auto opt: m){
-		if(opt.compare("/")){
-			if(operands[1] == 0){
-				output = "ERROR: NaN";
-			}else{
-				output += (operands[0] / operands[1]);
-			}
-		}else if(opt.compare("*")){
-			output += (operands[0] * operands[1]);
-		}else if(opt.compare("-")){
-			output += (operands[0] - operands[1]);
-		}else{
-			output += (operands[0] + operands[1]);
-		}
-	}
-	
-	return output;
-	
-}
-bool Calculator::isValidEquation(std::string equation){
-	 int8_t operandCount = 0;
-	 int8_t operatorCount = 0;
-	//Regex splits equation into tokens, which are the numbers
-	regex regexp("[A-Z0-9.]+");
-	smatch m;
-	regex_search(equation,m,regexp);
-	for(auto token: m){
-		operandCount++;
-	}
-	
-	regexp = "[\\/,*,-,+]+";
-	regex_search(equation,m,regexp);
-	for(auto token: m){
-		operatorCount++;
-	}
-	return (operatorCount == (operandCount - 1)) || (operandCount > 2);
-}
 

@@ -1,0 +1,12 @@
+[  5%] Built target lv_drivers
+[ 45%] Built target lvgl
+[ 84%] Built target lvgl_examples
+[ 98%] Built target lvgl_demos
+Consolidate compiler generated dependencies of target SSGC
+[ 98%] Building CXX object src/CMakeFiles/SSGC.dir/Util.cpp.o
+[  5%] Built target lv_drivers
+[ 45%] Built target lvgl
+[ 84%] Built target lvgl_examples
+[ 98%] Built target lvgl_demos
+Consolidate compiler generated dependencies of target SSGC
+[ 98%] Building CXX object src/CMakeFiles/SSGC.dir/Util.cpp.o

@@ -3,9 +3,6 @@ PROJECT (SSGC)
 SET(CMAKE_CXX_STANDARD 14)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-include(CTest)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake_includes/includeconv.cmake)
-
 option(PI_ENABLE "Enable compiling/linking for the Raspberry PI Zero 2 W" OFF)
 option(MCP_KEYPAD_ENABLE "Enable compiling/linking for external keyboard connected via i2c" OFF)
 option(LINUX_FRAMEBUFFER_ENABLE "Enabling compiling/linking without using a framebuffer" OFF)
