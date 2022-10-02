@@ -30,73 +30,107 @@ void Calculator::createDemo(){
 void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD
 	keypad.poll();
-	if(keypad.isPressed(X_SQUARED_BUTTON)){
-			lv_textarea_add_text(textArea,"sqrt(");
-	}else if(keypad.isPressed(LOG_BUTTON)){
-		lv_textarea_add_text(textArea,"10^");
-	}else if(keypad.isPressed(LN_BUTTON)){
-		lv_textarea_add_text(textArea,"e^");
-	}else if(keypad.isPressed(MODE_BUTTON)){
-		lv_textarea_add_text(textArea,"^");
+	if(keypad.isPressed(A_BUTTON)){
+			lv_textarea_add_text(textArea,"A");
+	}else if(keypad.isPressed(B_BUTTON)){
+		lv_textarea_add_text(textArea,"B");
+	}else if(keypad.isPressed(C_BUTTON)){
+		lv_textarea_add_text(textArea,"C");
+	}else if(keypad.isPressed(D_BUTTON)){
+		lv_textarea_add_text(textArea,"D");
 	}else if(keypad.isPressed(SETTINGS_BUTTON)){
-		//DO NOTHING
-	}else if(keypad.isPressed(LEFT_PARATHESIS_BUTTON)){
-		lv_textarea_add_text(textArea,"sin(");
+		lv_tabview_set_act(tabview,1,LV_ANIM_OFF);
+	}else if(keypad.isPressed(HOME_BUTTON)){
+		lv_tabview_set_act(tanview,0,LV_ANIM_OFF);
 	}else if(keypad.isPressed(LEFT_BUTTON)){
-		lv_textarea_add_text(textArea,"csc(");
-	}else if(keypad.isPressed(Y_EQUALS_BUTTON)){
-		//PI BUTTON
-		lv_textarea_add_text(textArea,"3.14");
+		lv_textarea_cursor_left(textArea);
+	}else if(keypad.isPressed(CONVERT_TO_DECIMAL_BUTTON)){
+
+		std::string num = lv_textarea_get_text(textArea);
+		std::string temp_mode = mode;
+		Number n(num);
+		int base = getType(num);
+		std::string output;
+		mode = "Decimal";
+		if(base == type::HEX){
+			n.data.signedExponentMantissaNumber = std::stoi(num,nullptr,16);
+			output = n.to_string();
+		}else if(base == type::BINARY){
+			n.data.binary = std::stoi(num,nullptr,2);
+		}
+		output = n.to_string();
+		/*Create the new text areas*/
+		lv_obj_t* parent = lv_obj_get_parent(textArea);
+        Calculator::lv_input_history_ta(parent, copy_input, textArea);
+	    Calculator::lv_result_ta(parent, output, textArea);
+        lv_obj_align(ta, LV_ALIGN_BOTTOM_MID, 0, ( 35 * total) + 35);
+        lv_textarea_set_text(textArea, "");
+        lv_obj_scroll_to_view(textArea, LV_ANIM_OFF);
+
+        lv_obj_scroll_by(parent, 0, 15, LV_ANIM_OFF);
+		mode = temp_mode;
+
 	}else if(keypad.isPressed(SEVEN_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"7");
 	}else if(keypad.isPressed(FOUR_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"4");
 	}else if(keypad.isPressed(ONE_BUTTON)){
-		//DO NOTHING
-	}else if(keypad.isPressed(ZERO_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"1");
+	}else if(keypad.isPressed(RESET_BUTTON)){
+		lv_obj_t* parent lv_obj_get_parent(textArea);
+		lv_obj_clean(parent);
+        Calculator::main_screen_driver(parent, false);
 	}else if(keypad.isPressed(UP_BUTTON)){
-		lv_textarea_add_text(textArea,"cos(");
+		lv_obj_t* parent = lv_obj_get_parent(textArea);
+		lv_obj_scroll_by(parent, 0, 25, LV_ANIM_OFF);
 	}else if(keypad.isPressed(SELECT_BUTTON)){
-		lv_textarea_add_text(textArea,"sec(");
+		//Select
 	}else if(keypad.isPressed(DOWN_BUTTON)){
-		//DO NOTHING
+		lv_obj_t* parent = lv_obj_get_parent(textArea);
+		lv_obj_scroll_by(parent, 0, -25, LV_ANIM_OFF);
 	}else if(keypad.isPressed(EIGHT_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"8");
 	}else if(keypad.isPressed(FIVE_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"5");
+	}
 	}else if(keypad.isPressed(TWO_BUTTON)){
-		//DO NOTHING;
-	}else if(keypad.isPressed(DOT_SIGN_BUTTON)){
-		//DO NOTHING
-	}else if(keypad.isPressed(RIGHT_PARATHESIS_BUTTON)){
-		lv_textarea_add_text(textArea,"tan(");
+		lv_textarea_add_text(textArea,"2");
+	}else if(keypad.isPressed(ZERO_BUTTON)){
+		lv_textarea_add_text(textArea,"0");
+	}else if(keypad.isPressed(CONVERT_TO_SEM_BUTTON)){
+		//Convert number to SEM
+		//First,get type to determine course of action
+		//Then, convert that base type into SEM
 	}else if(keypad.isPressed(RIGHT_BUTTON)){
-		lv_textarea_add_text(textArea,"cot(");
-	}else if(keypad.isPressed(GRAPH_BUTTON)){
-		//DO NOTHING
+		lv_textarea_cursor_right(textArea);
+	}else if(keypad.isPressed(CONVERT_TO_HEX_BUTTON)){
+
+		//Convert number to HEX
+		//First,get type to determine course of action
+		//Then, convert that base type into HEX	
 	}else if(keypad.isPressed(NINE_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"9");
 	}else if(keypad.isPressed(SIX_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"6");
 	}else if(keypad.isPressed(THREE_BUTTON)){
-		//DO NOTHING
-	}else if(keypad.isPressed(MINUS_SIGN_BUTTON)){
-		//ANS BUTTON
+		lv_textarea_add_text(textArea,"3");
+	}else if(keypad.isPressed(DOT_SIGN_BUTTON)){
+		lv_textarea_add_text(textArea,".");
 	}else if(keypad.isPressed(CLEAR_BUTTON)){
-		//DO NOTHING
+		lv_textarea_set_text(textArea,"");
 	}else if(keypad.isPressed(DELETE_BUTTON)){
-		//DO NOTHING
+		lv_textarea_del_char(textArea);
 	}else if(keypad.isPressed(DIVIDE_BUTTON)){
-		lv_textarea_add_text(textArea,"diff(");
+		lv_textarea_add_text(textArea,"/");
 	}else if(keypad.isPressed(MULTIPLY_BUTTON)){
-		lv_textarea_add_text(textArea,"integrate(");
+		lv_textarea_add_text(textArea,"*");
 	}else if(keypad.isPressed(SUBTRACT_BUTTON)){
-		lv_textarea_add_text(textArea,"factor(");
+		lv_textarea_add_text(textArea,"-");
 	}else if(keypad.isPressed(ADD_BUTTON)){
-		//DO NOTHING
+		lv_textarea_add_text(textArea,"+");
 	}else if(keypad.isPressed(ENTER_BUTTON)){
-		
+		if(strcmp(lv_textarea_get_text(textArea),"") != 0)
+			lv_event_send(textArea,LV_EVENT_READY,NULL);
 	}	
 	#endif
 }

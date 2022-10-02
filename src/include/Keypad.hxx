@@ -35,21 +35,21 @@ private:
 //Begin button defines
 
 //COLUMN ONE
-#define ALT_BUTTON  0
-#define ALPHA_BUTTON 1
-#define X_SQUARED_BUTTON  2
-#define LOG_BUTTON 3
-#define LN_BUTTON 4
-#define MODE_BUTTON 5
+#define A_BUTTON  0
+#define B_BUTTON 1
+#define C_BUTTON  2
+#define D_BUTTON 3
+#define E_BUTTON 4
+#define F_BUTTON 5
 #define SETTINGS_BUTTON 6
 //COLUMN TWO
-#define LEFT_PARATHESIS_BUTTON 8
+#define HOME_BUTTON 8
 #define LEFT_BUTTON 9
-#define Y_EQUALS_BUTTON 10
+#define CONVERT_TO_DECIMAL_BUTTON 10
 #define SEVEN_BUTTON 11
 #define FOUR_BUTTON 12
 #define ONE_BUTTON 13
-#define ZERO_BUTTON 14
+#define RESET_BUTTON 14
 //COLUMN THREE
 #define UP_BUTTON 16
 #define SELECT_BUTTON 17
@@ -57,15 +57,15 @@ private:
 #define EIGHT_BUTTON 19
 #define FIVE_BUTTON 20
 #define TWO_BUTTON 21
-#define DOT_SIGN_BUTTON 22
+#define ZERO_BUTTON 22
 //COLUMN FOUR
-#define RIGHT_PARATHESIS_BUTTON 24
+#define CONVERT_TO_SEM_BUTTON 24
 #define RIGHT_BUTTON 25
-#define GRAPH_BUTTON 26
+#define CONVERT_TO_HEX_BUTTON 26
 #define NINE_BUTTON 27
 #define SIX_BUTTON 28
 #define THREE_BUTTON 29
-#define MINUS_SIGN_BUTTON 30
+#define DOT_SIGN_BUTTON 30
 //COLUMN FIVE
 #define CLEAR_BUTTON 32
 #define DELETE_BUTTON 33 

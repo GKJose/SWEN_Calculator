@@ -17,6 +17,7 @@
 #include <fstream>
 #include <ctime>
 #include <Util.h>
+#include <Number.h>
 namespace Calculator{
     void createDemo();
 	void update(lv_timer_t * timer);

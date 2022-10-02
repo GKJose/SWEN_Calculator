@@ -36,8 +36,9 @@ class Number{
                 std::bitset<32> bits(data.binary);
                 return bits.to_string();
             }else if(mode == "Hexadecimal"){
+                data.signedExponentMantissaNumber = (int32_t)data.decimalNumber;
                 std::stringstream ss;
-                ss << std::hex;
+                ss << std::uppercase << std::hex;
                 for(int i = 0; i < sizeof(data.hex);i++){
                     ss << +data.hex[i];
                 }
