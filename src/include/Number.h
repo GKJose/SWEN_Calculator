@@ -7,6 +7,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+extern std::string mode;
 
 class Number{
     public:

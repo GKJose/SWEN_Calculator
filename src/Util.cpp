@@ -1,4 +1,6 @@
 #include <Util.h>
+extern std::string mode;
+
 std::string solveEquation(std::string equation)
 {
     //Solve the equation provided
