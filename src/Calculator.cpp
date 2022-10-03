@@ -140,6 +140,7 @@ void Calculator::main_screen_driver(lv_obj_t* parent, bool first_screen)
 
     /*Initial Input text area*/
     //lv_obj_t* active_ta = lv_active_ta(parent);
+	
     lv_obj_t* active_ta = lv_textarea_create(parent);
 	textArea = active_ta;
     areas[total] = active_ta;
