@@ -53,6 +53,7 @@ void Calculator::update(lv_timer_t * timer){
 
 		std::string num = lv_textarea_get_text(textArea);
 		std::string output;
+		int base = getType(num);
 		if(base == type::HEX){
 			output = std::to_string(std::stoi(num,nullptr,16));
 		}else if(base == type::BINARY){
