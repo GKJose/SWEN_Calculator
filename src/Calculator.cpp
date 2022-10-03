@@ -52,18 +52,12 @@ void Calculator::update(lv_timer_t * timer){
 	}else if(keypad.isPressed(CONVERT_TO_DECIMAL_BUTTON)){
 
 		std::string num = lv_textarea_get_text(textArea);
-		std::string temp_mode = mode;
-		Number n(num);
-		int base = getType(num);
 		std::string output;
-		mode = "Decimal";
 		if(base == type::HEX){
-			n.data.signedExponentMantissaNumber = std::stoi(num,nullptr,16);
-			output = n.to_string();
+			output = std::to_string(std::stoi(num,nullptr,16));
 		}else if(base == type::BINARY){
-			n.data.binary = std::stoi(num,nullptr,2);
+			output = std::to_string(std::stoi(num,nullptr,2));
 		}
-		output = n.to_string();
 		/*Create the new text areas*/
 		lv_obj_t* parent = lv_obj_get_parent(textArea);
         Calculator::lv_input_history_ta(parent, num, textArea);
@@ -73,7 +67,6 @@ void Calculator::update(lv_timer_t * timer){
         lv_obj_scroll_to_view(textArea, LV_ANIM_OFF);
 
         lv_obj_scroll_by(parent, 0, 15, LV_ANIM_OFF);
-		mode = temp_mode;
 
 	}else if(keypad.isPressed(SEVEN_BUTTON)){
 		lv_textarea_add_text(textArea,"7");
