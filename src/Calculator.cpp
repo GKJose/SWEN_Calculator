@@ -38,7 +38,12 @@ void Calculator::update(lv_timer_t * timer){
 		lv_textarea_add_text(textArea,"C");
 	}else if(keypad.isPressed(D_BUTTON)){
 		lv_textarea_add_text(textArea,"D");
-	}else if(keypad.isPressed(SETTINGS_BUTTON)){
+	}else if(keypad.isPressed(E_BUTTON)){
+		lv_textarea_add_text(textArea,"E");
+	}else if(keypad.isPressed(F_BUTTON)){
+		lv_textarea_add_text(textArea,"F");		
+	}
+	else if(keypad.isPressed(SETTINGS_BUTTON)){
 		lv_tabview_set_act(tabview,1,LV_ANIM_OFF);
 	}else if(keypad.isPressed(HOME_BUTTON)){
 		lv_tabview_set_act(tabview,0,LV_ANIM_OFF);
