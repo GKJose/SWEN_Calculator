@@ -1,5 +1,13 @@
 #include <Util.h>
 extern std::string mode;
+string binaryCharacters = "01";
+set<char> binarySet(binaryCharacters.begin(),binaryCharacters.end());
+
+string decimalCharacters = "0123456789";
+set<char> decimalSet(decimalCharacters.begin(),decimalCharacters.end());
+
+string hexadecimalCharacters = "0123456789ABCDEF";
+set<char> hexadecimalSet(hexadecimalCharacters.begin(),hexadecimalCharacters.end());
 
 std::string solveEquation(std::string equation)
 {
@@ -40,7 +48,8 @@ std::string solveEquation(std::string equation)
     return "=" + solution.to_string();
     
 }
-bool isValidEquation(std::string equation){
+int isValidEquation(std::string equation){
+    set<int> bases;
     std::cout << "Checking equation!" << std::endl;
     std::string equ = equation;
     int8_t operandCount = 0;
@@ -49,52 +58,56 @@ bool isValidEquation(std::string equation){
     regex regexp("[A-F0-9.]+");
     smatch m;
     while(regex_search(equation,m,regexp)){
+        //Check to see that the input is in correct base
+        std::cout << m.str() << std::endl;
+        int base = getType(m.str());
+        std::cout << base << std::endl;
+        bases.insert(base);
         operandCount++;
         equation = m.suffix();
 
     }
-    regexp = "[\\/,*,-,+]+";
+    regexp = "[\\/,*,-,+]";
     while(regex_search(equ,m,regexp)){
         operatorCount++;
         equ = m.suffix();
     }
-    return operatorCount == 1 && operandCount == 2;
+    
+    if(operatorCount > 1){
+        return 0;
+    }else if(operandCount > 2){
+        return -1;
+    }else if(bases.size() > 1){
+        return -2;
+    }
+    return 1;
 }
 uint8_t getType(std::string number){
-    std::string temp = number;
-    std::cout << "Getting type" << std::endl;
-    regex regexp("[0-1]+");
-    smatch m;
-    int count = 0;
-    while(regex_search(number,m,regexp)){
-        count++;
-        number = m.suffix();
-    }
-    if(count == 1){
+    //Makes a set of all the characters in number
+    // Each entry in numSet is unique
+
+    set<char> numSet(number.begin(),number.end());
+    vector<char> differenceSet;
+    set_difference(hexadecimalCharacters.begin(),hexadecimalCharacters.end(),decimalSet.begin(),decimalSet.end(),back_inserter(differenceSet));
+
+    //sort(numSet.begin(),numSet.end());
+
+    //Checking to see if it is binary
+        //Sort differenceSet
+   
+    //Check to see if the difference set contains decimal
+    if(mode == "Decimal" && includes(decimalSet.begin(),decimalSet.end(),numSet.begin(),numSet.end())){
+        return type::DECIMAL;
+    }else if(mode == "Hexadecimal" && includes(hexadecimalSet.begin(),hexadecimalSet.end(),numSet.begin(),numSet.end())){
+        return type::HEX;
+
+    }else if(includes(binarySet.begin(),binarySet.end(),numSet.begin(),numSet.end())){
         if(mode == "Binary"){
             return type::BINARY;
         }else if(mode == "Signed Exp. Man."){
             return type::SEM;
         }
     }
-    number = temp;
-    regexp = "[A-F0-9]+";
-    while(regex_search(number,m,regexp)){
-        count++;
-        number = m.suffix();
-    }
-    if(count == 1) return type::HEX;
-    count = 0;
-    number = temp;
-    regexp = "[0-9.]+";
-
-    while(regex_search(number,m,regexp)){
-        count++;
-        number = m.suffix();
-    }
-    if(count == 1) return type::DECIMAL;
-    count = 0;
-
     
-    return type::INVALID;
+        return type::INVALID;
 }

@@ -20,14 +20,21 @@ static Keypad keypad;
   Segmentation Fault occurs at 60 Entries, 120 Working Text areas.*/
 lv_obj_t* areas[100];
 int total;
-
+lv_obj_t* baseLabel;
 static lv_obj_t* tabview;
-
+extern std::string mode;
 void Calculator::createDemo(){
 	tabview = lv_main_screen_tabs();
 	textArea = areas[0];
+	lv_obj_t* parent = lv_obj_get_parent(tabview);
+	baseLabel = lv_label_create(parent);
+	lv_label_set_text(baseLabel,mode.c_str());
+	lv_obj_set_pos(baseLabel,200,25);
+
 }
 void Calculator::update(lv_timer_t * timer){
+	
+	lv_label_set_text(baseLabel,mode.c_str());
 	#if ENABLE_MCP_KEYPAD
 	keypad.poll();
 	if(keypad.isPressed(A_BUTTON)){
@@ -183,12 +190,16 @@ static void Calculator::active_ta_event_handler(lv_event_t* e)
         string output = "";
 		
         const char *copy_input = lv_textarea_get_text(ta);
-		
-		if(isValidEquation(copy_input)){
+		int validCode = isValidEquation(copy_input);
+		if(validCode == 1){
 			std::cout << "Equation is valid!";
 			output = solveEquation(copy_input);
-		}else{
-			output = "ERROR: Invalid Equation.";
+		}else if(validCode == 0){
+			output = "ERROR: More than 1 operator!";
+		}else if(validCode == -1){
+			output = "ERROR:More than 2 operands!";
+		}else if(validCode == -2){
+			output = "ERROR:Both Operands not same base!";
 		}
         /*Create the new text areas*/
         Calculator::lv_input_history_ta(parent, copy_input, ta);

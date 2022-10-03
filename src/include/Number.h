@@ -13,10 +13,6 @@ class Number{
     public:
         Number(float number);
         Number(std::string number);
-        float getDecimal();
-        std::string getHexadecimal();
-        std::string getBinary();
-        std::string getSEM();
         inline Number operator / (Number const &m){
               return Number(data.decimalNumber / m.data.decimalNumber);
         }
