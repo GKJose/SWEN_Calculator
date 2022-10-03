@@ -61,9 +61,9 @@ void Calculator::update(lv_timer_t * timer){
 		output = n.to_string();
 		/*Create the new text areas*/
 		lv_obj_t* parent = lv_obj_get_parent(textArea);
-        Calculator::lv_input_history_ta(parent, copy_input, textArea);
+        Calculator::lv_input_history_ta(parent, num, textArea);
 	    Calculator::lv_result_ta(parent, output, textArea);
-        lv_obj_align(ta, LV_ALIGN_BOTTOM_MID, 0, ( 35 * total) + 35);
+        lv_obj_align(textArea, LV_ALIGN_BOTTOM_MID, 0, ( 35 * total) + 35);
         lv_textarea_set_text(textArea, "");
         lv_obj_scroll_to_view(textArea, LV_ANIM_OFF);
 
@@ -92,7 +92,6 @@ void Calculator::update(lv_timer_t * timer){
 		lv_textarea_add_text(textArea,"8");
 	}else if(keypad.isPressed(FIVE_BUTTON)){
 		lv_textarea_add_text(textArea,"5");
-	}
 	}else if(keypad.isPressed(TWO_BUTTON)){
 		lv_textarea_add_text(textArea,"2");
 	}else if(keypad.isPressed(ZERO_BUTTON)){
