@@ -41,7 +41,7 @@ void Calculator::update(lv_timer_t * timer){
 	}else if(keypad.isPressed(SETTINGS_BUTTON)){
 		lv_tabview_set_act(tabview,1,LV_ANIM_OFF);
 	}else if(keypad.isPressed(HOME_BUTTON)){
-		lv_tabview_set_act(tanview,0,LV_ANIM_OFF);
+		lv_tabview_set_act(tabview,0,LV_ANIM_OFF);
 	}else if(keypad.isPressed(LEFT_BUTTON)){
 		lv_textarea_cursor_left(textArea);
 	}else if(keypad.isPressed(CONVERT_TO_DECIMAL_BUTTON)){
@@ -77,7 +77,7 @@ void Calculator::update(lv_timer_t * timer){
 	}else if(keypad.isPressed(ONE_BUTTON)){
 		lv_textarea_add_text(textArea,"1");
 	}else if(keypad.isPressed(RESET_BUTTON)){
-		lv_obj_t* parent lv_obj_get_parent(textArea);
+		lv_obj_t* parent = lv_obj_get_parent(textArea);
 		lv_obj_clean(parent);
         Calculator::main_screen_driver(parent, false);
 	}else if(keypad.isPressed(UP_BUTTON)){
