@@ -18,7 +18,7 @@ Current default build flags are as follows:
 The following is a quickstart on how to clone and build this project on arch linux with proper vscode intellisense support:
 
 ```bash
-sudo pacman -S base-devel giac sdl2 cmake
+sudo pacman -S base-devel sdl2 cmake
 git clone --recursive https://github.com/GKJose/Smart_Symbolic_Graphing_Calculator.git
 cd Smart_Symbolic_Graphing_Calculator
 cmake -DGIAC_ENABLE=ON .
@@ -28,7 +28,7 @@ cmake --build .
 The following command below is an example on how to clone and build this project on the raspberry pi:
 
 ```bash
-sudo apt install -y build-essential libgiac-dev libmpfr-dev libgmp3-dev python3-smbus i2c-tools cmake nmap
+sudo apt install -y build-essential python3-smbus i2c-tools cmake nmap
 git clone --recursive https://github.com/GKJose/Smart_Symbolic_Graphing_Calculator.git
 cd Smart_Symbolic_Graphing_Calculator
 cmake -DLINUX_ENABLE=OFF -DPI_ENABLE=ON .
