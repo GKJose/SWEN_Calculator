@@ -200,6 +200,8 @@ static void Calculator::active_ta_event_handler(lv_event_t* e)
 			output = "ERROR:More than 2 operands!";
 		}else if(validCode == -2){
 			output = "ERROR:Both Operands not same base!";
+		}else if(validCode == -3){
+			output = "ERROR:1+ operands not in "+mode;
 		}
         /*Create the new text areas*/
         Calculator::lv_input_history_ta(parent, copy_input, ta);

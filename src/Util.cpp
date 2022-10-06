@@ -3,7 +3,7 @@ extern std::string mode;
 string binaryCharacters = "01";
 set<char> binarySet(binaryCharacters.begin(),binaryCharacters.end());
 
-string decimalCharacters = "0123456789";
+string decimalCharacters = ".0123456789";
 set<char> decimalSet(decimalCharacters.begin(),decimalCharacters.end());
 
 string hexadecimalCharacters = "0123456789ABCDEF";
@@ -14,7 +14,7 @@ std::string solveEquation(std::string equation)
     //Solve the equation provided
     //Use regex to pull operators/operands
     std::string output = "";
-    Number solution(0.0);
+    Number solution(0.0f);
     std::string equ = equation;
     regex regexp("[0-9A-F.]+");
     smatch m;
@@ -22,7 +22,7 @@ std::string solveEquation(std::string equation)
     
     std::vector<Number> operands;
     while(regex_search(equation,m,regexp)){
-        operands.push_back(Number(m[0].str()));
+        operands.push_back(Number(m.str()));
         equation = m.suffix();
     }
     regexp = "[\\/,*,-,+]";
@@ -30,17 +30,17 @@ std::string solveEquation(std::string equation)
     while(regex_search(equ,m,regexp)){
         std::string opt = m[0].str();
         if(opt.compare("/") == 0){
-            if(operands[1].data.decimalNumber == 0.0f){
+            if(operands[1].data.decimalNumber == 0.0f || operands[1].data.binary == 0){
                 return "ERROR: NaN";
             }else{
-                solution = (operands[0] / operands[1]);
+                solution = Number(operands[0] / operands[1]);
             }
         }else if(opt.compare("*") == 0){
-            solution =  (operands[0] * operands[1]);
+            solution =  Number(operands[0] * operands[1]);
         }else if(opt.compare("-") == 0){
-            solution = (operands[0] - operands[1]);
+            solution = Number(operands[0] - operands[1]);
         }else if(opt.compare("+") == 0){
-            solution = (operands[0] + operands[1]);
+            solution = Number(operands[0] + operands[1]);
         }
         equ = m.suffix();
     }
@@ -72,7 +72,18 @@ int isValidEquation(std::string equation){
         operatorCount++;
         equ = m.suffix();
     }
-    
+    for(int base:bases){
+        std::cout << "Checking bases" << std::endl;
+        if(base == type::DECIMAL && mode != "Decimal"){
+            return -3;
+        }else if(base == type::BINARY && mode != "Binary"){
+            return -3;
+        }else if(base == type::HEX && mode != "Hexadecimal"){
+            return -3;
+        }else if(base == type::SEM && mode != "Signed Exp. Man."){
+            return -3;
+        }
+    }
     if(operatorCount > 1){
         return 0;
     }else if(operandCount > 2){

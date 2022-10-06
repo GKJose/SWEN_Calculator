@@ -133,6 +133,8 @@ class Settings{
         lv_obj_align(dd,LV_ALIGN_TOP_MID,0,20);
         lv_obj_add_event_cb(dd,dd_event_cb,LV_EVENT_ALL,NULL);
 
+        
+
         create_root_text_container(sub_mode_page, LV_SYMBOL_IMAGE, "Mode");
 
     }
