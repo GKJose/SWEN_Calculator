@@ -31,7 +31,7 @@ lv_obj_t* lv_main_screen_tabs(void)
     
 
     /*Add content to the tabs*/
-    Calculator::main_screen_driver(tab1, true);
+    Calculator::main_screen_driver(tab1);
     createSettingsTab(tab3);
     return tabview;
 
