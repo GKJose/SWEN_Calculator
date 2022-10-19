@@ -12,7 +12,7 @@ tuple<std::vector<SEMNumber>,std::string,int> parseInput(std::string equation){
     //First condition gets all hex number prefixed with 0x
     //Second condition get all binary numbers sufixed with b
     //Last condition get all decimal numbers in form x.x, x
-    regex regexp("\\[0x[0-9A-F]{1},0x[0-9A-F]{1,2},0x[0-9A-F]{1,23}\\]|0x[0-9A-F]+|[0-9]+.[0-9]+|[0-9]+|0b[01]+/g");
+    regex regexp(R"((\[0x[0-9A-F]{1},0x[0-9A-F]{1,2},0x[0-9A-F]{1,23}\])|(0x[0-9A-F]+)|(-?(0|[1-9]\d*)?(\.\d+)?(?<=\d))|(0b[01]+))");
     smatch m;
     while(regex_search(equation,m,regexp)){
         int base = getType(m.str());
@@ -105,7 +105,7 @@ tuple<std::string,std::string,std::string> getSEMHexFromBinary(bitset<32> bits){
 
     ss.str("");
     ss << "0x" << reverseBits(stoi(bits.to_string().substr(0,23),nullptr,2));
-    mantissa = ss.str().substr(0,9);
+    mantissa = ss.str().substr(0,8);
 
     return tuple(sign,exponent,mantissa);
 
