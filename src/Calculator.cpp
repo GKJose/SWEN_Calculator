@@ -28,7 +28,7 @@ void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD
 	keypad.poll();
 	if(keypad.isPressed(x_BUTTON)){
-
+		lv_textarea_add_text(textArea,"x");
 	}
 	else if(keypad.isPressed(A_BUTTON)){
 			lv_textarea_add_text(textArea,"A");
@@ -57,15 +57,12 @@ void Calculator::update(lv_timer_t * timer){
 		lv_textarea_add_text(textArea,"1");
 	}else if(keypad.isPressed(b_BUTTON)){
 		lv_textarea_add_text(textArea,"b");
-	}
-	else if(keypad.isPressed(RESET_BUTTON)){
-		//Clear output text area
 	}else if(keypad.isPressed(UP_BUTTON)){
-		//Scroll output text area up
+		lv_obj_scroll_by(outputTextArea,0,-10,LV_ANIM_ON);
 	}else if(keypad.isPressed(COMMA_BUTTON)){
 		lv_textarea_add_text(",");
 	}else if(keypad.isPressed(DOWN_BUTTON)){
-		//Scroll output textbox down
+		lv_obj_scroll_by(outputTextArea,0,10,LV_ANIM_ON);
 	}else if(keypad.isPressed(EIGHT_BUTTON)){
 		lv_textarea_add_text(textArea,"8");
 	}else if(keypad.isPressed(FIVE_BUTTON)){
@@ -75,11 +72,12 @@ void Calculator::update(lv_timer_t * timer){
 	}else if(keypad.isPressed(ZERO_BUTTON)){
 		lv_textarea_add_text(textArea,"0");
 	}else if(keypad.isPressed(RESET_BUTTON)){
-		//Reset both text areas
+		lv_textarea_set_text(textArea,"");
+		lv_textarea_set_text(outputTextArea,"");
 	}else if(keypad.isPressed(RIGHT_BUTTON)){
 		lv_textarea_cursor_right(textArea);
-	}else if(keypad.isPressed(LEFT_BRACKET_BUTTON){
-		lv_textarea_add_text(textArea,"[")
+	}else if(keypad.isPressed(LEFT_BRACKET_BUTTON)){
+		lv_textarea_add_text(textArea,"[");
 	}else if(keypad.isPressed(NINE_BUTTON)){
 		lv_textarea_add_text(textArea,"9");
 	}else if(keypad.isPressed(SIX_BUTTON)){
@@ -140,7 +138,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 		
         const char *copy_input = lv_textarea_get_text(textArea);
 		auto [operands,opt,inputCode] = parseInput(copy_input);
-		if(inputCode < 0){
+		if(inputCode <= 0){
 			output = "ERROR: Check input\n";
 			output += copy_input;
 		
@@ -149,10 +147,11 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 		}else if(inputCode == 2){
 			std::cout << "Equation is valid!\n";
 			output += copy_input;
-			output += "\n";
+			output += "-----------------\n";
 			output += operands.at(0).toString();
-			output += "\n";
+			output += "----------------\n";
 			output += operands.at(1).toString();
+			output += "----------------\n";
 			
 			if(opt.compare("*") == 0){
 				output += (operands.at(0) * operands.at(1)).toString();
@@ -165,6 +164,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 		std::cout << output;
 		lv_textarea_set_text(outputTextArea,output.c_str());
 		lv_textarea_set_text(textArea,"");
+		lv_obj_scroll_to(outputTextArea,0,0,LV_ANIM_ON);
 	}
   
 	

@@ -18,6 +18,8 @@ lv_obj_t * create_slider(lv_obj_t * parent, const char * icon, const char * txt,
 lv_obj_t * create_switch(lv_obj_t * parent, const char * icon, const char * txt, bool chk);
 lv_obj_t * create_button(lv_obj_t * parent, const char * txt);
 void* setting;
+
+LV_IMG_DECLARE(button_map);
 std::string mode;
 class Settings{
     using container = lv_obj_t;
@@ -25,7 +27,7 @@ class Settings{
     using section = lv_obj_t;
    
     
-    lv_obj_t *parent, *menu, *root_page, *sub_display_page,*sub_mode_page, *sub_about_page;
+    lv_obj_t *parent, *menu, *root_page, *sub_display_page,*sub_help_page, *sub_about_page;
     std::map<section*, std::vector<container*>> container_map;
     std::map<page*, std::vector<section*>> section_map;
     public:
@@ -42,6 +44,7 @@ class Settings{
 
         init_root_page();
         init_display_page();
+        init_help_page();
         init_about_page();
 
         lv_event_send(lv_obj_get_child(lv_obj_get_child(lv_menu_get_cur_sidebar_page(menu), 0), 0), LV_EVENT_CLICKED, nullptr);  
@@ -49,7 +52,13 @@ class Settings{
     }
     private:
 
-    static void back_event_handler(lv_event_t * e){}
+    static void back_event_handler(lv_event_t * e){
+        lv_event_code_t code = lv_event_get_code(e);
+        lv_obj_t* obj = lv_event_get_target(e);
+        if(code == LV_EVENT_CLICKED){
+            lv_obj_add_flag(obj,LV_OBJ_FLAG_OVERFLOW_VISIBLE);
+        }
+    }
 
     static void slider_event_cb(lv_event_t * e){
         lv_obj_t * slider = lv_event_get_target(e);
@@ -57,12 +66,6 @@ class Settings{
         softPwmWrite(5,(int)lv_slider_get_value(slider));
         std::cout << (int)lv_slider_get_value(slider) + "\n";
         #endif 
-    }
-    static void dd_event_cb(lv_event_t* e){
-        lv_obj_t* dropdown = lv_event_get_target(e);
-        char buf[64];
-        lv_dropdown_get_selected_str(dropdown,buf,sizeof(buf));
-        mode = buf;
     }
     page* init_page(){
         LV_ASSERT(menu!=nullptr);
@@ -117,24 +120,19 @@ class Settings{
         lv_obj_add_event_cb(slider, slider_event_cb, LV_EVENT_VALUE_CHANGED, nullptr);
         create_root_text_container(sub_display_page, LV_SYMBOL_IMAGE, "Display");
     }
-    void init_mode_page(){
-        sub_mode_page = init_page();
-        section* sec = create_section(sub_mode_page);
+    void init_help_page(){
+        sub_help_page = init_page();
+        section* sec = create_section(sub_help_page);
         container* con = create_container(sec);
-        //Create drop-down menu
-        lv_obj_t* dd = lv_dropdown_create(con);
-        lv_dropdown_set_options(dd,"Decimal\n"
-                                    "Hexadecimal\n"
-                                    "Binary\n"
-                                    "Signed Exp. Man.");
-        lv_dropdown_set_text(dd,"Mode");
-        lv_dropdown_set_selected(dd,0);
-        lv_obj_align(dd,LV_ALIGN_TOP_MID,0,20);
-        lv_obj_add_event_cb(dd,dd_event_cb,LV_EVENT_ALL,NULL);
 
+        lv_obj_t* buttonMapImg = lv_img_create(con);
+        lv_img_set_src(buttonMapImg,&button_map);
+        lv_obj_align(buttonMapImg,LV_ALIGN_CENTER,0,0);
         
 
-        create_root_text_container(sub_mode_page, LV_SYMBOL_IMAGE, "Mode");
+        //lv_obj_set_size(table,LV_SIZE_CONTENT,LV_SIZE_CONTENT);
+
+        create_root_text_container(sub_help_page, LV_SYMBOL_IMAGE, "Help");
 
     }
     void init_about_page(){
