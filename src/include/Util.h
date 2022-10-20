@@ -17,4 +17,6 @@ using namespace std;
     tuple<std::string,std::string,std::string> getSEMHexFromBinary(bitset<32> bits);
     uint32_t reverseBits(uint32_t n);
 
+
+
 #endif

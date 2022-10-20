@@ -26,34 +26,34 @@ class SEMNumber{
         inline string toString(){
             stringstream ss;
             if(this->isNaN){
-                ss << "The input is NaN.";
+                ss << "Decimal: NaN" << endl;
             }else if(this->isINF){
-                ss << "The input is " << (this->bits[0] == 0?"positive ":"negative ") << "infinity";
+                ss << "Decimal: "<< (bits[0] == 0?"+":"-") << "inf." << endl;
             }else{
-                //Decimal output
-                ss << "Decimal: " << this->decimalNumber << endl;
-                //HEX output
-                ss << "Hexadecimal: " << hex;
-                ss << endl;
-                ss.clear();
-
-                //SEH output
-                ss << "SEH: " << this->signHex << "|" << this->exponentHex << "|" << this->mantissaHex;
-                ss << endl;
-                //SEM-binary output
-                for(int i = 0; i < bits.size(); i++){
-                    if(i == 1 || i == 9){
-                        ss << "|";
-                    }
-                    ss << bits[i];
-                }
-                ss << endl;
                 if(!this->isNormal){
                     ss << "--- Float is denormalized! ---" << endl;
                 }else{
                     ss << "--- Float is normalized! ---" << endl;
                 }
+                ss << "Decimal: " << this->decimalNumber << endl;
             }
+            //HEX output
+            ss << "Hexadecimal: " << hex;
+            ss << endl;
+            ss.clear();
+
+            //SEH output
+            ss << "SEH: " << this->signHex << "|" << this->exponentHex << "|" << this->mantissaHex;
+            ss << endl;
+            //SEM-binary output
+            for(int i = 0; i < bits.size(); i++){
+                if(i == 1 || i == 9){
+                    ss << "|";
+                }
+                ss << bits[i];
+            }
+            ss << endl;
+        
             return ss.str();
         }
         double decimalNumber;

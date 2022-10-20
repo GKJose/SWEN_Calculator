@@ -141,12 +141,15 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
         const char *copy_input = lv_textarea_get_text(textArea);
 		auto [operands,opt,inputCode] = parseInput(copy_input);
 		if(inputCode < 0){
-			output = "ERROR: Check input";
+			output = "ERROR: Check input\n";
+			output += copy_input;
 		
 		}else if(inputCode == 1){
 			output = operands.at(0).toString();
 		}else if(inputCode == 2){
-			std::cout << "Equation is valid!";
+			std::cout << "Equation is valid!\n";
+			output += copy_input;
+			output += "\n";
 			output += operands.at(0).toString();
 			output += "\n";
 			output += operands.at(1).toString();
