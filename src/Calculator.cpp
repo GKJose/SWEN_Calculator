@@ -25,10 +25,10 @@ void Calculator::createDemo(){
 }
 void Calculator::update(lv_timer_t * timer){
 	
-	#if ENABLE_MCP_KEYPAD
+	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
 	if(keypad.isPressed(x_BUTTON)){
-		lv_textarea_add_text(textArea,"x");
+		lv_event_send_recursive(tabview,LV_EVENT_KEY,&x_BUTTTON);
 	}
 	else if(keypad.isPressed(A_BUTTON)){
 			lv_textarea_add_text(textArea,"A");
@@ -128,10 +128,22 @@ void Calculator::main_screen_driver(lv_obj_t* parent)
 /*Callback functions*/
 static void Calculator::input_ta_event_handler(lv_event_t* e)
 {   
+	
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t* ta = lv_event_get_target(e);
     lv_obj_t* parent = lv_obj_get_parent(ta);
-   if (code == LV_EVENT_READY)
+	if(!lv_obj_is_visible(ta)){
+		return;
+	}
+	#if ENABLE_MCP_KEYPAD
+   	if(code == LV_EVENT_KEY){
+	   uint8_t buttonID = lv_event_get_user_data(e);
+	   if(btnnID = x_BUTTON){
+		   lv_textarea_add_text(ta,"x");
+	   }
+   }
+   #endif
+    if (code == LV_EVENT_READY)
     {
 		// Set the solution to the string output, the rest of the code handles displaying the result
     	string output = "";
