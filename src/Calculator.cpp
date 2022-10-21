@@ -6,7 +6,6 @@
 #include <thread>
 #if ENABLE_MCP_KEYPAD
 #include <Keypad.hxx>
-static int* btnID = lv_mem_alloc(sizeof(int));
 #endif
 
 using namespace std;
@@ -28,8 +27,10 @@ void Calculator::createDemo(){
 void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
+	static int* btnID = lv_mem_alloc(sizeof(int));
 	for(int btn = x_BUTTON; btn <= ENTER_BUTTON;btn++){
 		if(keypad.isPressed(btn)){
+
 			*btnID = btn;
 			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,btnID);
 			return;
