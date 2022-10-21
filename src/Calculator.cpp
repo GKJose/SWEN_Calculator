@@ -12,7 +12,7 @@ using namespace std;
 /*Declarations*/
 static lv_obj_t* textArea,*outputTextArea;
 #if ENABLE_MCP_KEYPAD
-int* btnID;
+int* btnID = new int();
 static Keypad keypad;
 #endif
 
