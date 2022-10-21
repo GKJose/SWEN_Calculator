@@ -126,12 +126,6 @@ uint32_t reverseBits(uint32_t n){
     }
     return ans;
 }
-uint32_t getuInt32(bitset<32> bits){
-    uint32_t ans = 0;
-    for(int i = 0; i < 32; i++){
-        ans += ((bits[i] == 1)?pow(2,i):0);
-    }
-}
 //Sends an event, and optional data to an obj and all its children recursively.
 void lv_event_send_recursive(lv_obj_t* obj,lv_event_t e,void* data){
     lv_event_send(parent,e,data);
