@@ -27,16 +27,12 @@ void Calculator::createDemo(){
 void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
-	std::thread keypad_check([](){
-		for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON;btnID++){
-			if(keypad.isPressed(btnID)){
-				int* id = malloc(sizeof(int));
-				*id = btnID;
-				cout << *id << endl;
-				lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,id);
-			}
-		}	
-	},nullptr);
+	for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON;btnID++){
+		if(keypad.isPressed(btnID)){
+			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
+		}
+	}	
+
 	
 	#endif
 }
@@ -76,6 +72,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   auto btnID = (int *)lv_event_get_user_data(e);
 	   if(btnID == nullptr){
 		   cout << "nullptr!"<< endl;
+		   return;
 	   }else{
 	  	 cout << *btnID << endl;
 	   }
