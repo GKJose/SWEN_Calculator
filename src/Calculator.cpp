@@ -27,80 +27,10 @@ void Calculator::update(lv_timer_t * timer){
 	
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
-	if(keypad.isPressed(x_BUTTON)){
-		lv_event_send_recursive(tabview,LV_EVENT_KEY,&x_BUTTTON);
-	}
-	else if(keypad.isPressed(A_BUTTON)){
-			lv_textarea_add_text(textArea,"A");
-	}else if(keypad.isPressed(B_BUTTON)){
-		lv_textarea_add_text(textArea,"B");
-	}else if(keypad.isPressed(C_BUTTON)){
-		lv_textarea_add_text(textArea,"C");
-	}else if(keypad.isPressed(D_BUTTON)){
-		lv_textarea_add_text(textArea,"D");
-	}else if(keypad.isPressed(E_BUTTON)){
-		lv_textarea_add_text(textArea,"E");
-	}else if(keypad.isPressed(F_BUTTON)){
-		lv_textarea_add_text(textArea,"F");		
-	}
-	else if(keypad.isPressed(HOME_BUTTON)){
-		lv_tabview_set_act(tabview,0,LV_ANIM_OFF);
-	}else if(keypad.isPressed(LEFT_BUTTON)){
-		lv_textarea_cursor_left(textArea);
-	}else if(keypad.isPressed(SETTINGS_BUTTON)){
-		lv_tabview_set_act(tabview,1,LV_ANIM_OFF);
-	}else if(keypad.isPressed(SEVEN_BUTTON)){
-		lv_textarea_add_text(textArea,"7");
-	}else if(keypad.isPressed(FOUR_BUTTON)){
-		lv_textarea_add_text(textArea,"4");
-	}else if(keypad.isPressed(ONE_BUTTON)){
-		lv_textarea_add_text(textArea,"1");
-	}else if(keypad.isPressed(b_BUTTON)){
-		lv_textarea_add_text(textArea,"b");
-	}else if(keypad.isPressed(UP_BUTTON)){
-		lv_obj_scroll_by(outputTextArea,0,-10,LV_ANIM_ON);
-	}else if(keypad.isPressed(COMMA_BUTTON)){
-		lv_textarea_add_text(",");
-	}else if(keypad.isPressed(DOWN_BUTTON)){
-		lv_obj_scroll_by(outputTextArea,0,10,LV_ANIM_ON);
-	}else if(keypad.isPressed(EIGHT_BUTTON)){
-		lv_textarea_add_text(textArea,"8");
-	}else if(keypad.isPressed(FIVE_BUTTON)){
-		lv_textarea_add_text(textArea,"5");
-	}else if(keypad.isPressed(TWO_BUTTON)){
-		lv_textarea_add_text(textArea,"2");
-	}else if(keypad.isPressed(ZERO_BUTTON)){
-		lv_textarea_add_text(textArea,"0");
-	}else if(keypad.isPressed(RESET_BUTTON)){
-		lv_textarea_set_text(textArea,"");
-		lv_textarea_set_text(outputTextArea,"");
-	}else if(keypad.isPressed(RIGHT_BUTTON)){
-		lv_textarea_cursor_right(textArea);
-	}else if(keypad.isPressed(LEFT_BRACKET_BUTTON)){
-		lv_textarea_add_text(textArea,"[");
-	}else if(keypad.isPressed(NINE_BUTTON)){
-		lv_textarea_add_text(textArea,"9");
-	}else if(keypad.isPressed(SIX_BUTTON)){
-		lv_textarea_add_text(textArea,"6");
-	}else if(keypad.isPressed(THREE_BUTTON)){
-		lv_textarea_add_text(textArea,"3");
-	}else if(keypad.isPressed(DOT_SIGN_BUTTON)){
-		lv_textarea_add_text(textArea,".");
-	}else if(keypad.isPressed(CLEAR_BUTTON)){
-		lv_textarea_set_text(textArea,"");
-	}else if(keypad.isPressed(DELETE_BUTTON)){
-		lv_textarea_del_char(textArea);
-	}else if(keypad.isPressed(RIGHT_BRACKET_BUTTON)){
-		lv_textarea_add_text(textArea,"]");
-	}else if(keypad.isPressed(MULTIPLY_BUTTON)){
-		lv_textarea_add_text(textArea,"*");
-	}else if(keypad.isPressed(SUBTRACT_BUTTON)){
-		lv_textarea_add_text(textArea,"-");
-	}else if(keypad.isPressed(ADD_BUTTON)){
-		lv_textarea_add_text(textArea,"+");
-	}else if(keypad.isPressed(ENTER_BUTTON)){
-		if(strcmp(lv_textarea_get_text(textArea),"") != 0)
-			lv_event_send(textArea,LV_EVENT_READY,NULL);
+	for(int btnId = x_BUTTON; i <= ENTER_BUTTON; btnId++){
+		if(keypad.isPressed(btnID)){
+			lv_event_send_recursive(tabview,LV_EVENT_KEY,&btnId);
+		}
 	}	
 	#endif
 }
@@ -138,8 +68,10 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	#if ENABLE_MCP_KEYPAD
    	if(code == LV_EVENT_KEY){
 	   uint8_t buttonID = lv_event_get_user_data(e);
-	   if(btnnID = x_BUTTON){
+	   if(btnnID == x_BUTTON){
 		   lv_textarea_add_text(ta,"x");
+	   }else if(btnID == ENTER_BUTTON){
+		   lv_event_send(ta,LV_EVENT_READY,nullptr);
 	   }
    }
    #endif
