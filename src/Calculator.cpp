@@ -12,6 +12,7 @@ using namespace std;
 /*Declarations*/
 static lv_obj_t* textArea,*outputTextArea;
 #if ENABLE_MCP_KEYPAD
+int* btnID;
 static Keypad keypad;
 #endif
 
@@ -26,7 +27,7 @@ void Calculator::createDemo(){
 void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
-	int* btnID = new int(x_BUTTON);
+	*btnID = x_BUTTON;
 	for(; *btnID <= ENTER_BUTTON;(*btnID)++){
 		if(keypad.isPressed(*btnID)){
 			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,btnID);
