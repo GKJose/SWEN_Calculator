@@ -12,7 +12,7 @@ using namespace std;
 /*Declarations*/
 static lv_obj_t* textArea,*outputTextArea;
 #if ENABLE_MCP_KEYPAD
-int* btnID = new int();
+
 static Keypad keypad;
 #endif
 
@@ -27,10 +27,10 @@ void Calculator::createDemo(){
 void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
-	*btnID = x_BUTTON;
-	for(; *btnID <= ENTER_BUTTON;(*btnID)++){
-		if(keypad.isPressed(*btnID)){
-			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,btnID);
+
+	for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON;btnID++){
+		if(keypad.isPressed(btnID)){
+			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,new int(btnID));
 		}
 	}	
 	#endif
@@ -75,6 +75,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   }else if(btnID == ENTER_BUTTON){
 		   lv_event_send(ta,LV_EVENT_READY,nullptr);
 	   }
+	   delete &btnID;
    }
    #endif
     if (code == LV_EVENT_READY)
