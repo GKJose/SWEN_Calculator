@@ -29,7 +29,7 @@ void Calculator::update(lv_timer_t * timer){
 	keypad.poll();
 	for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON; btnID++){
 		if(keypad.isPressed(btnID)){
-			lv_event_send_recursive(tabview,LV_EVENT_KEY,&btnId);
+			lv_event_send_recursive(tabview,LV_EVENT_KEY,&btnID);
 		}
 	}	
 	#endif
