@@ -5,7 +5,7 @@
 #if ENABLE_MCP_KEYPAD
 #include <lvgl/lvgl.h>
 #include <MCP23017.hxx>
-uint32_t LV_EVENT_KEY_PRESSED;
+
 class Keypad
 {
 public:
@@ -32,7 +32,7 @@ private:
 
 
 
-
+uint32_t LV_EVENT_KEY_PRESSED = lv_event_register_id();
 //Begin button defines
 
 //COLUMN ONE
