@@ -6,6 +6,7 @@
 #include <Keypad.hxx>
 
 #if ENABLE_MCP_KEYPAD 
+LV_EVENT_KEY_PRESSED =  = lv_event_register_id();
 Keypad::Keypad(){
 	// Create the MCP23017 driver.
 	mcp = MCP23017(BUS,ADDRESS);

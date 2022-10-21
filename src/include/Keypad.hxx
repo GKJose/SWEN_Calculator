@@ -32,7 +32,7 @@ private:
 
 
 
-uint32_t LV_EVENT_KEY_PRESSED = lv_event_register_id();
+uint32_t LV_EVENT_KEY_PRESSED;
 //Begin button defines
 
 //COLUMN ONE
