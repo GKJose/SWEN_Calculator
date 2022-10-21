@@ -15,6 +15,7 @@ static lv_obj_t* textArea,*outputTextArea;
 #if ENABLE_MCP_KEYPAD
 
 static Keypad keypad;
+static int btnID;
 #endif
 
 
@@ -27,7 +28,6 @@ void Calculator::createDemo(){
 void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
-	static int btnID;
 	for(int btn = x_BUTTON; btn <= ENTER_BUTTON;btn++){
 		if(keypad.isPressed(btn)){
 
