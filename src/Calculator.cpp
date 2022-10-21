@@ -36,7 +36,7 @@ void Calculator::update(lv_timer_t * timer){
 				lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,id);
 			}
 		}	
-	};,nullptr);
+	},nullptr);
 	
 	#endif
 }
