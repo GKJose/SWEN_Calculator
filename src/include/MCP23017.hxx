@@ -18,7 +18,7 @@ extern "C" {
 #include <unistd.h>
 #include <errno.h>
 
-
+LV_EVENT_KEY_PRESSED = lv_event_register_id();
 
 class MCP23017
 {
