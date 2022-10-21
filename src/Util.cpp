@@ -127,7 +127,7 @@ uint32_t reverseBits(uint32_t n){
     return ans;
 }
 //Sends an event, and optional data to an obj and all its children recursively.
-void lv_event_send_recursive(lv_obj_t* obj,lv_event_t e,void* data){
+void lv_event_send_recursive(lv_obj_t* obj,lv_event_code_t e,void* data){
     lv_event_send(obj,e,data);
 
     uint8_t childCnt = lv_obj_get_child_cnt(obj);

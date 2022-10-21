@@ -16,7 +16,7 @@ using namespace std;
     std::string getHexFromBinary(bitset<32> bits);
     tuple<std::string,std::string,std::string> getSEMHexFromBinary(bitset<32> bits);
     uint32_t reverseBits(uint32_t n);
-    void lv_event_send_recursive(lv_obj_t* obj,lv_event_t e,void* data);
+    void lv_event_send_recursive(lv_obj_t* obj,lv_event_code_t e,void* data);
 
 
 
