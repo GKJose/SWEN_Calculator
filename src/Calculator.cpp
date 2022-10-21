@@ -32,6 +32,7 @@ void Calculator::update(lv_timer_t * timer){
 		if(keypad.isPressed(btn)){
 
 			btnID = btn;
+			cout << &btnID << endl;
 			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
 			return;
 		}
