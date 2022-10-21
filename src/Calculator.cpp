@@ -75,7 +75,6 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   }else if(btnID == ENTER_BUTTON){
 		   lv_event_send(ta,LV_EVENT_READY,nullptr);
 	   }
-	   delete &btnID;
    }
    #endif
     if (code == LV_EVENT_READY)
