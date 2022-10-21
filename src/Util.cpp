@@ -131,6 +131,7 @@ void lv_event_send_recursive(lv_obj_t* obj,lv_event_code_t e,void* data){
     lv_event_send(obj,e,data);
 
     uint8_t childCnt = lv_obj_get_child_cnt(obj);
+    cout << "children count:" << childCnt << endl;
     if(childCnt = 0) return;
 
     for(int idx = 0; idx < childCnt;idx++){
