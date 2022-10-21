@@ -24,7 +24,6 @@ void Calculator::createDemo(){
 
 }
 void Calculator::update(lv_timer_t * timer){
-	
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
 	for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON; btnID++){
@@ -67,7 +66,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	}
 	#if ENABLE_MCP_KEYPAD
    	if(code == LV_EVENT_KEY_PRESSED){
-	   int btnID = (int)lv_event_get_user_data(e);
+	   int btnID = (int*)lv_event_get_user_data(e);
 	   cout << btnID << endl;
 	   if(btnID == x_BUTTON){
 		   lv_textarea_add_text(ta,"x");
