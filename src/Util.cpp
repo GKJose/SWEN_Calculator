@@ -136,10 +136,10 @@ uint32_t getuInt32(bitset<32> bits){
 void lv_event_send_recursive(lv_obj_t* obj,lv_event_t e,void* data){
     lv_event_send(parent,e,data);
 
-    uint8_t childCnt = lv_obj_get_child_cnt(parent);
+    uint8_t childCnt = lv_obj_get_child_cnt(obj);
     if(childCnt = 0) return;
 
-    for(int idx = 0; idx < childCnt;i++){
+    for(int idx = 0; idx < childCnt;idx++){
         lv_event_send_recursive(lv_obj_get_child(parent,idx),e,data);
     }
 }
