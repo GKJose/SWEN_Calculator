@@ -63,6 +63,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
     lv_obj_t* ta = lv_event_get_target(e);
     lv_obj_t* parent = lv_obj_get_parent(ta);
 	if(!lv_obj_is_visible(ta)){
+		cout << "input textarea not visible!" << endl;
 		return;
 	}
 	#if ENABLE_MCP_KEYPAD
