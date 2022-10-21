@@ -30,7 +30,7 @@ void Calculator::update(lv_timer_t * timer){
 
 	for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON;btnID++){
 		if(keypad.isPressed(btnID)){
-			int* id = new int(btnID);
+			int* id = malloc(sizeof(int));
 			*id = btnID;
 			cout << *id << endl;
 			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,id);
@@ -82,6 +82,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   }else if(*btnID == ENTER_BUTTON){
 		   lv_event_send(ta,LV_EVENT_READY,nullptr);
 	   }
+	   free(btnID);
    }
    #endif
     if (code == LV_EVENT_READY)
