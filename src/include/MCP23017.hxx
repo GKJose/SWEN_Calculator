@@ -17,7 +17,6 @@ extern "C" {
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-uint32_t LV_EVENT_KEY_PRESSED;
 
 
 class MCP23017
