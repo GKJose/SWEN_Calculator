@@ -28,7 +28,7 @@ void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
 	static int* btnID = lv_mem_alloc(sizeof(int));
-	for(*btnID = x_BUTTON; btnID <= ENTER_BUTTON;(*btnID)++){
+	for(*btnID = x_BUTTON; *btnID <= ENTER_BUTTON;(*btnID)++){
 		if(keypad.isPressed(*btnID)){
 			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
 			return;
