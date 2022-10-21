@@ -29,7 +29,6 @@ void Calculator::update(lv_timer_t * timer){
 	keypad.poll();
 	for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON; btnID++){
 		if(keypad.isPressed(btnID)){
-			cout << "keypad update, is pressed:" << btnID << endl;
 			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
 		}
 	}	
@@ -64,7 +63,6 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
     lv_obj_t* ta = lv_event_get_target(e);
     lv_obj_t* parent = lv_obj_get_parent(ta);
 	if(!lv_obj_is_visible(ta)){
-		cout << "input textarea not visible!" << endl;
 		return;
 	}
 	#if ENABLE_MCP_KEYPAD
