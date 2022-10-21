@@ -68,7 +68,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	#if ENABLE_MCP_KEYPAD
    	if(code == LV_EVENT_KEY){
 	   uint8_t btnID = (uint8_t)lv_event_get_user_data(e);
-	   if(btnD == x_BUTTON){
+	   if(btnID == x_BUTTON){
 		   lv_textarea_add_text(ta,"x");
 	   }else if(btnID == ENTER_BUTTON){
 		   lv_event_send(ta,LV_EVENT_READY,nullptr);
