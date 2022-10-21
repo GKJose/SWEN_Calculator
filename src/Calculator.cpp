@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <unistd.h>
+#include <thread>
 #if ENABLE_MCP_KEYPAD
 #include <Keypad.hxx>
 #endif
@@ -22,20 +23,22 @@ extern std::string mode;
 void Calculator::createDemo(){
 	tabview = lv_main_screen_tabs();
 
-
 }
 void Calculator::update(lv_timer_t * timer){
 	#if ENABLE_MCP_KEYPAD 
 	keypad.poll();
-
-	for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON;btnID++){
-		if(keypad.isPressed(btnID)){
-			int* id = malloc(sizeof(int));
-			*id = btnID;
-			cout << *id << endl;
-			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,id);
-		}
-	}	
+	std::thread keypad_check([](){
+		for(int btnID = x_BUTTON; btnID <= ENTER_BUTTON;btnID++){
+			if(keypad.isPressed(btnID)){
+				int* id = malloc(sizeof(int));
+				*id = btnID;
+				cout << *id << endl;
+				lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,id);
+			}
+		}	
+	}
+	,nullptr);
+	
 	#endif
 }
 void Calculator::main_screen_driver(lv_obj_t* parent)
