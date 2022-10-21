@@ -129,10 +129,9 @@ uint32_t reverseBits(uint32_t n){
 //Sends an event, and optional data to an obj and all its children recursively.
 void lv_event_send_recursive(lv_obj_t* obj,lv_event_code_t e,void* data){
     lv_event_send(obj,e,data);
-
+    cout << data << endl;
     uint32_t childCnt = lv_obj_get_child_cnt(obj);
     if(childCnt == 0) return;
-
     for(int idx = 0; idx < childCnt;idx++){
         lv_event_send_recursive(lv_obj_get_child(obj,idx),e,data);
     }

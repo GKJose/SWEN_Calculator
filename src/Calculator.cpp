@@ -30,9 +30,8 @@ void Calculator::update(lv_timer_t * timer){
 	keypad.poll();
 	for(int btn = x_BUTTON; btn <= ENTER_BUTTON;btn++){
 		if(keypad.isPressed(btn)){
-
+			cout << "top: " << &btnID << endl;;
 			btnID = btn;
-			cout << &btnID << endl;
 			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
 			return;
 		}
@@ -74,10 +73,9 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	}
 	#if ENABLE_MCP_KEYPAD
    	if(code == LV_EVENT_KEY_PRESSED){
-	   int* btnID = (int *)lv_event_get_user_data(e);
+	   int btnID = *(int *)lv_event_get_user_data(e);
 	   
-	  	 cout << btnID << endl;
-	   return;
+
 	   if(btnID == x_BUTTON){
 		   lv_textarea_add_text(ta,"x");
 	   }else if(btnID == ENTER_BUTTON){
