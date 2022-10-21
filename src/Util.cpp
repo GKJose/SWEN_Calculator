@@ -140,6 +140,6 @@ void lv_event_send_recursive(lv_obj_t* obj,lv_event_t e,void* data){
     if(childCnt = 0) return;
 
     for(int idx = 0; idx < childCnt;idx++){
-        lv_event_send_recursive(lv_obj_get_child(parent,idx),e,data);
+        lv_event_send_recursive(lv_obj_get_child(obj,idx),e,data);
     }
 }
