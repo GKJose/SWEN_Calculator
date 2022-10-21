@@ -68,7 +68,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 		return;
 	}
 	#if ENABLE_MCP_KEYPAD
-   	if(code == LV_EVENT_KEYPAD{
+   	if(code == LV_EVENT_KEYPAD){
 	   uint8_t btnID = (uint8_t)lv_event_get_user_data(e);
 	   cout << btnID << endl;
 	   if(btnID == x_BUTTON){
