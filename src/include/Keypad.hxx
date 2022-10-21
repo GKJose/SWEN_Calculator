@@ -3,8 +3,9 @@
 #include <calc_conf.h>
 
 #if ENABLE_MCP_KEYPAD
+#include <lvgl/lvgl.h>
 #include <MCP23017.hxx>
-
+uint32_t LV_EVENT_KEYPAD = lv_event_register_id();
 class Keypad
 {
 public:
