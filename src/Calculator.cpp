@@ -73,7 +73,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	}
 	#if ENABLE_MCP_KEYPAD
    	if(code == LV_EVENT_KEY_PRESSED){
-	   auto ptr = lv_event_get_user_data(e);
+	   void* ptr = lv_event_get_user_data(e);
 	   cout << "bottom: " << ptr << endl;
 	   return;
 
