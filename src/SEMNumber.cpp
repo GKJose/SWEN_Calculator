@@ -95,7 +95,6 @@ SEMNumber::SEMNumber(double number){
     stringstream ss;
     this->decimalNumber = number;
     this->isNormal = abs(number) >= std::numeric_limits<float>::min();
-
     union data{
         float f;
         uint32_t bits;
