@@ -63,10 +63,9 @@ lv_obj_t* lv_main_screen_tabs(void)
     /*Add 3 tabs (the tabs are page (lv_page) and can be scrolled*/
     lv_obj_t *tab1 = lv_tabview_add_tab(tabview, "Main");
     lv_obj_t *tab2 = lv_tabview_add_tab(tabview, "Settings");
-    lv_obj_t *tab3 = lv_tabview_add_tab(tabview,"Help");
 
     lv_obj_set_scrollbar_mode(tab1, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_scrollbar_mode(tab3, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_scrollbar_mode(tab2, LV_SCROLLBAR_MODE_OFF);
     
 
     /*Add content to the tabs*/
