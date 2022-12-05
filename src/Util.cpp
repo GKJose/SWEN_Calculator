@@ -133,7 +133,7 @@ uint8_t getType(std::string number){
 //************************************************************
 //* getBinaryFromHex
 //*
-//* Author: Mendez,Jose - Cyberbits01
+//* Author: Smith, Michael - Cyberbits01
 //* 
 //* Purpose: 
 //*
@@ -184,7 +184,7 @@ std::string getHexFromBinary(bitset<32> bits){
 //************************************************************
 //* getSEMHEXFromBinary
 //*
-//* Author: Mendez,Jose - Cyberbits01
+//* Author: Smith, Michael - Cyberbits01
 //* 
 //* Purpose: 
 //*
@@ -219,7 +219,7 @@ tuple<std::string,std::string,std::string> getSEMHexFromBinary(bitset<32> bits){
 //************************************************************
 //* reverseBits
 //*
-//* Author: Mendez,Jose - Cyberbits01
+//* Author: Smith, Michael - Cyberbits01
 //* 
 //* Purpose: 
 //*
