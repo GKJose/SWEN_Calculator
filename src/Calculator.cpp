@@ -30,9 +30,15 @@ void Calculator::update(lv_timer_t * timer){
 	keypad.poll();
 	for(int btn = x_BUTTON; btn <= ENTER_BUTTON;btn++){
 		if(keypad.isPressed(btn)){
-			cout << "top: " << &btnID << endl;;
-			btnID = btn;
-			lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
+			if(btn == HOME_BUTTON){
+
+			}else if(btn == SETTINGS_BUTTON){
+
+			}else{
+				btnID = btn;
+				lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
+			}
+			
 			return;
 		}
 	}	
@@ -76,6 +82,64 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   int btnID = *(int*)lv_event_get_param(e);
 	   if(btnID == x_BUTTON){
 		   lv_textarea_add_text(ta,"x");
+	   }else if(btnID == A_BUTTON){
+		   lv_textarea_add_text(ta,"A");
+	   }else if(btnID == B_BUTTON){
+		   lv_textarea_add_text(ta,"B");
+	   }else if(btnID == C_BUTTON){
+		   lv_textarea_add_text(ta,"C");
+	   }else if(btnID == D_BUTTON){
+		   lv_textarea_add_text(ta,"D");
+	   }else if(btnID == E_BUTTON){
+		   lv_textarea_add_text(ta,"E");
+	   }else if(btnID == F_BUTTON){
+		   lv_textarea_add_text(ta,"F");
+	   }else if(btnID == LEFT_BUTTON){
+		   
+	   }else if(btnID == SEVEN_BUTTON){
+		   lv_textarea_add_text(ta,"7");
+	   }else if(btnID == FOUR_BUTTON){
+		   lv_textarea_add_text(ta,"4");
+	   }else if(btnID == ONE_BUTTON){
+		   lv_textarea_add_text(ta,"1");
+	   }else if(btnID == b_BUTTON){
+		   lv_textarea_add_text(ta,"b");
+	   }else if(btnID == COMMA_BUTTON){
+		   lv_textarea_add_text(ta,",");
+	   }else if(btnID == EIGHT_BUTTON){
+		   lv_textarea_add_text(ta,"8");
+	   }else if(btnID == FIVE_BUTTON){
+		   lv_textarea_add_text(ta,"5");
+	   }else if(btnID == TWO_BUTTON){
+		   lv_textarea_add_text(ta,"2");
+	   }else if(btnID == ZERO_BUTTON){
+		   lv_textarea_add_text(ta,"0");
+	   }else if(btnID == RESET_BUTTON){
+		   lv_textarea_set_text(ta,"");
+	   }else if(btnID == RIGHT_BUTTON){
+		   
+	   }else if(btnID == LEFT_BRACKET_BUTTON){
+		   lv_textarea_add_text(ta,"[");
+	   }else if(btnID == NINE_BUTTON){
+		   lv_textarea_add_text(ta,"9");
+	   }else if(btnID == SIX_BUTTON){
+		   lv_textarea_add_text(ta,"6");
+	   }else if(btnID == THREE_BUTTON){
+		   lv_textarea_add_text(ta,"3");
+	   }else if(btnID == DOT_SIGN_BUTTON){
+		   lv_textarea_add_text(ta,".");
+	   }else if(btnID == CLEAR_BUTTON){
+		   lv_textarea_set_text(ta,"")
+	   }else if(btnID == DELETE_BUTTON){
+		   lv_textarea_del_char(ta);
+	   }else if(btnID == RIGHT_BRACKET_BUTTON){
+		   lv_textarea_add_text(ta,"]");
+	   }else if(btnID == MULTIPLY_BUTTON){
+		   lv_textarea_add_text(ta,"*");
+	   }else if(btnID == SUBTRACT_BUTTON){
+		   lv_textarea_add_text(ta,"-");
+	   }else if(btnID == ADD_BUTTON){
+		   lv_textarea_add_text(ta,"+");
 	   }else if(btnID == ENTER_BUTTON){
 		   lv_event_send(ta,LV_EVENT_READY,nullptr);
 	   }

@@ -1,3 +1,16 @@
+//SEMNumber.cpp
+//************************************************************
+//*                                                          
+//* Author: Mendez, Jose - Cyberbits01
+//*`Purpose: To represent the numbers handled by the program
+//*
+//* Contains:                                        |UPDATE
+//*   SEMNumber (Constructors).......................|
+//* 
+//*
+//* Date: 16Nov22
+//************************************************************
+
 #include <SEMNumber.h>
 #include<Util.h>
 SEMNumber::SEMNumber(string sign,string exponent,string mantissa){

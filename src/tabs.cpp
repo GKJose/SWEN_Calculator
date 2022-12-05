@@ -1,8 +1,47 @@
+//tabs.cpp
+//************************************************************
+//*                                                          
+//* Author: Mendez, Jose - Cyberbits01
+//*`Purpose: To instantalize the screen tabs
+//*
+//* Contains:                                        |UPDATE
+//* lv_main_screen_tabs..............................|
+//* 
+//*
+//* Date: 16Nov22
+//************************************************************
+
+
 #include <Calculator.h>
 #include <stdio.h>
 #include <tabs.hxx>
 
-
+//************************************************************
+//* lv_main_screen_tabs
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: parseInput(equation)
+//*     equation = The mathematical equation to be parsed
+//*
+//* Returns: tuple containing the vector of SEMNumber operands, the operator as a String, and lastly an error code.
+//*
+//* Functions called:                   Source:
+//*   lv_tabview_create                  lvgl.a
+//*   lv_obj_add_event_cb                lvgl.a
+//*   lv_tabview_get_content             lvgl.a
+//*   lv_tabview_get_tab_btns            lvgl.a
+//*   lv_obj_set_style_bg_color          lvgl.a
+//*   lv_obj_set_style_text_color        lvgl.a
+//*   lv_obj_set_style_border_side       lvgl.a
+//*   lv_obj_set_scrollbar_mode          lvgl.a
+//*   main_screen_driver                 Calculator.cpp
+//*   createSettingsTab                  Settings.cpp
+//*
+//* Date: 16Nov22
+//************************************************************
 
 lv_obj_t* lv_main_screen_tabs(void)
 {

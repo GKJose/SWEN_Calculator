@@ -1,7 +1,19 @@
-/**
-	AUTHOR: JOSE MENDEZ
-*/
-
+//Keypad.cpp
+//************************************************************
+//*                                                          
+//* Author: Mendez, Jose - Cyberbits01
+//*`Purpose: The class representing the keypad interface, stores button states.
+//*
+//* Contains:                                        |UPDATE
+//* Keypad (Constructor)
+//* ~Keypad (Deconstructor)
+//*	poll
+//* isPressed
+//* isBothPressed
+//* reset
+//*
+//* Date: 16Nov22
+//************************************************************
 
 #include <Keypad.hxx>
 
@@ -30,11 +42,24 @@ Keypad::~Keypad(){
 	//Close the I2C connection once this object is destoried.
 	mcp.closeI2C();
 }
-
-/**
-	FUNCTION NAME: poll
-	DESCRIPTION: Checks if any buttons were pressed and saves it in a bit string. 
-*/
+//************************************************************
+//* poll
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: To poll the keypad buttons via the MCP23017
+//*
+//* Usage: poll()
+//*     
+//*
+//* Returns: N/A
+//*
+//* Functions called:                   Source:
+//*   digitalWrite							MCP23017.cpp
+//*   readGPIO								MCP23017.CPP
+//*   
+//* Date: 16Nov22
+//************************************************************
 void Keypad::poll(){
         //Cycle through the columns, setting one column at a time to high
 	for(int c = 0; c < N_COLS; c++){
@@ -46,12 +71,24 @@ void Keypad::poll(){
 	}
 
 }
-/**
-	FUNCTION NAME: isPressed
-	DESCRIPTION: Checks if the bit associated with the button is set.
-	PARAMETERS: id - the button id
-	RETURNS: true if the button was pressed, false otherwise.
-*/
+//************************************************************
+//* isPressed
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: isPressed(id)
+//*     id - The button id to check
+//*     **MUST be called after poll **
+//*
+//* Returns: true if the button checked was pressed.
+//*
+//* Functions called:                   Source:
+//*  
+//*   
+//* Date: 16Nov22
+//************************************************************
 bool Keypad::isPressed(uint8_t id){
 	//Check if the bit associated with the button is set
 	if(buttonStates & ( 1ULL << id)){
@@ -61,6 +98,23 @@ bool Keypad::isPressed(uint8_t id){
 	}
 	return false;
 }
+//************************************************************
+//* isBothPressed
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: isBothpressed(id1,id2)
+//*     id1,id2 - The button id to check
+//*
+//* Returns: true if both were pressed.
+//*
+//* Functions called:                   Source:
+//*   
+//*   
+//* Date: 16Nov22
+//************************************************************
 bool Keypad::isBothPressed(uint8_t id1,uint8_t id2){
 	return ( buttonStates & ( 1ULL << id1) ) & ( buttonStates & ( 1ULL << id2) );
 }

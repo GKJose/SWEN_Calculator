@@ -1,5 +1,39 @@
-#include <Util.h>
+//Util.cpp
+//************************************************************
+//*                                                          
+//* Author: Mendez, Jose - Cyberbits01
+//*`Purpose: To provide functions for misc. operations required
+//*
+//* Contains:                                        |UPDATE
+//* parseInput ......................................|
+//* getType .........................................|
+//* getBinaryFromHex ................................|
+//* getSEMHEXFromBinary .............................|
+//* reverseBits .....................................|
+//* 
+//*
+//* Date: 16Nov22
+//************************************************************
 
+
+#include <Util.h>
+//************************************************************
+//* parseInput
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: parseInput(equation)
+//*     equation = The mathematical equation to be parsed
+//*
+//* Returns: tuple containing the vector of SEMNumber operands, the operator as a String, and lastly an error code.
+//*
+//* Functions called:                   Source:
+//*   getType                               Util.cpp
+//*   
+//* Date: 16Nov22
+//************************************************************
 tuple<std::vector<SEMNumber>,std::string,int> parseInput(std::string equation){
     
     vector<SEMNumber> operands;
@@ -68,6 +102,22 @@ tuple<std::vector<SEMNumber>,std::string,int> parseInput(std::string equation){
     }
     return tuple(operands,opt,code);
 }
+//************************************************************
+//* getType
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: getType(number)
+//*     number = The number as a string
+//*
+//* Returns: A uint8_t number representing the base of the number
+//*
+//* Functions called:                   Source:
+//*     
+//* Date: 16Nov22
+//************************************************************
 uint8_t getType(std::string number){
 
     if(number.find("b") == 1 ){
@@ -80,6 +130,22 @@ uint8_t getType(std::string number){
         return type::DECIMAL;
     }
 }
+//************************************************************
+//* getBinaryFromHex
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: getBinaryFromHex(hexString)
+//*     hexString = The hexadecimal string to be parsed into a bitset.
+//*
+//* Returns: 
+//*
+//* Functions called:                   Source:
+//*     
+//* Date: 16Nov22
+//************************************************************
 bitset<32> getBinaryFromHex(string hexString){
     bitset<32> bits;
     int byteOffset = 0;
@@ -89,6 +155,22 @@ bitset<32> getBinaryFromHex(string hexString){
     return bits;
 
 }
+//************************************************************
+//* getHexFromBinary
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: getHexFromBinary(bits)
+//*     bits = The bitset to be converted.
+//*
+//* Returns: 
+//*
+//* Functions called:                   Source:
+//*   reverseBits                         Util.cpp
+//* Date: 16Nov22
+//************************************************************
 std::string getHexFromBinary(bitset<32> bits){
     stringstream ss;
     ss << "0x" << setbase(16) << uppercase;
@@ -99,6 +181,22 @@ std::string getHexFromBinary(bitset<32> bits){
     }
     return ss.str();
 }
+//************************************************************
+//* getSEMHEXFromBinary
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: getSEMHEXFromBinary(bits)
+//*     bits = The bitset to be converted.
+//*
+//* Returns: 
+//*
+//* Functions called:                   Source:
+//*   reverseBits                          Util.cpp
+//* Date: 16Nov22
+//************************************************************
 tuple<std::string,std::string,std::string> getSEMHexFromBinary(bitset<32> bits){
     std::string sign,exponent,mantissa;
     stringstream ss;
@@ -118,6 +216,22 @@ tuple<std::string,std::string,std::string> getSEMHexFromBinary(bitset<32> bits){
     return tuple(sign,exponent,mantissa);
 
 }
+//************************************************************
+//* reverseBits
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: reverseBits(n)
+//*     n = The uint32_t number to be reversed.
+//*
+//* Returns: 
+//*
+//* Functions called:                   Source:
+//*     
+//* Date: 16Nov22
+//************************************************************
 uint32_t reverseBits(uint32_t n){
     uint32_t ans = 0;
     for(int i = 31; i >= 0; i--){
@@ -126,7 +240,25 @@ uint32_t reverseBits(uint32_t n){
     }
     return ans;
 }
-//Sends an event, and optional data to an obj and all its children recursively.
+//************************************************************
+//* lv_event_send_recursively
+//*
+//* Author: Mendez,Jose - Cyberbits01
+//* 
+//* Purpose: 
+//*
+//* Usage: lv_event_send_recursively(obj,e,data)
+//*     obj =  The lv_obj parent.
+//*     e   =  The lv_event to be pased to the children of obj.
+//*     data = The user data to be passed to the children of obj.
+//*
+//* Returns: 
+//*
+//* Functions called:                   Source:
+//*     lv_event_send                       lvgl.a
+//*     lv_obj_get_child_cnt                lvgl.a
+//* Date: 16Nov22
+//************************************************************
 void lv_event_send_recursive(lv_obj_t* obj,lv_event_code_t e,void* data){
     lv_event_send(obj,e,data);
     cout << data << endl;
