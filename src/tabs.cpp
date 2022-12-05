@@ -23,10 +23,10 @@
 //* 
 //* Purpose: 
 //*
-//* Usage: parseInput(equation)
-//*     equation = The mathematical equation to be parsed
+//* Usage: lv_main_screen_tabs
+//*     
 //*
-//* Returns: tuple containing the vector of SEMNumber operands, the operator as a String, and lastly an error code.
+//* Returns: the lv_obj tabview
 //*
 //* Functions called:                   Source:
 //*   lv_tabview_create                  lvgl.a
