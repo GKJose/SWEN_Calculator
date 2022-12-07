@@ -207,10 +207,11 @@ static void output_ta_event_handler(lv_event_t* e){
 	   int btnID = *(int*)lv_event_get_param(e);
 	   if(btnID == UP_BUTTON){
 		   lv_textarea_cursor_up(ta);
-	   }else if(btdID == DOWN_BUTTON){
+	   }else if(btnID == DOWN_BUTTON){
 		   lv_textarea_cursor_down(ta);
 	   }
 	}
+	#endif
 }
 
 
