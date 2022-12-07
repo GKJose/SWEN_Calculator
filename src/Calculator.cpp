@@ -12,13 +12,7 @@ using namespace std;
 
 /*Declarations*/
 static lv_obj_t* textArea,*outputTextArea;
-static string initialText = "Welcome to Cyberbits01 Calculator!\n
-							 Enter any equation, or single number.\n
-							 SEM-H/SEM-B as follows [0x0,0x00,0x0..0]\n
-							 [0,0...0,0...0]\n
-							 Decimal as 25.0 or 25\n
-							 Binary as 0....1\n
-							 Valid operations are *,-,+.";
+static string initialText = "Welcome to Cyberbits01 Calculator!\nEnter any equation, or single number.\nSEM-H/SEM-B as follows [0x0,0x00,0x0..0]\n[0,0...0,0...0]\nDecimal as 25.0 or 25\nBinary as 0....1\nValid operations are *,-,+.";
 #if ENABLE_MCP_KEYPAD
 
 static Keypad keypad;
