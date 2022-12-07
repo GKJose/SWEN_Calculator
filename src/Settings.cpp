@@ -58,7 +58,7 @@ class Settings{
 
         init_root_page();
         init_display_page();
-        init_help_page();
+        //init_help_page();
         init_about_page();
 
         lv_event_send(lv_obj_get_child(lv_obj_get_child(lv_menu_get_cur_sidebar_page(menu), 0), 0), LV_EVENT_CLICKED, nullptr);  

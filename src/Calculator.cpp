@@ -12,6 +12,13 @@ using namespace std;
 
 /*Declarations*/
 static lv_obj_t* textArea,*outputTextArea;
+static string initialText = "Welcome to Cyberbits01 Calculator!\n
+							 Enter any equation, or single number.\n
+							 SEM-H/SEM-B as follows [0x0,0x00,0x0..0]\n
+							 [0,0...0,0...0]\n
+							 Decimal as 25.0 or 25\n
+							 Binary as 0....1\n
+							 Valid operations are *,-,+.";
 #if ENABLE_MCP_KEYPAD
 
 static Keypad keypad;
@@ -34,6 +41,9 @@ void Calculator::update(lv_timer_t * timer){
 
 			}else if(btn == SETTINGS_BUTTON){
 
+			}else if(btn == RESET_BUTTON){
+				lv_textarea_set_text(textArea,"");
+				lv_textarea_set_text(outputTextArea,initialText.c_str());
 			}else{
 				btnID = btn;
 				lv_event_send_recursive(lv_scr_act(),LV_EVENT_KEY_PRESSED,&btnID);
@@ -62,8 +72,9 @@ void Calculator::main_screen_driver(lv_obj_t* parent)
 	lv_obj_set_width(outputTextArea,320);
 	lv_obj_set_height(outputTextArea,175);
 	lv_obj_align(outputTextArea,LV_ALIGN_TOP_MID,0,-10);
-	lv_obj_add_state(outputTextArea,LV_STATE_DISABLED);
-	
+	lv_obj_add_state(outputTextArea,LV_STATE_DEFAULT);
+	lv_obj_add_event_cb(outputTextArea,output_ta_event_handler,LV_EVENT_ALL,nullptr);
+	lv_textarea_set_text(outputTextArea,initialText.c_str());
 
 }
 
@@ -95,7 +106,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   }else if(btnID == F_BUTTON){
 		   lv_textarea_add_text(ta,"F");
 	   }else if(btnID == LEFT_BUTTON){
-		   
+		   lv_textarea_cursor_left(ta);
 	   }else if(btnID == SEVEN_BUTTON){
 		   lv_textarea_add_text(ta,"7");
 	   }else if(btnID == FOUR_BUTTON){
@@ -117,7 +128,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   }else if(btnID == RESET_BUTTON){
 		   lv_textarea_set_text(ta,"");
 	   }else if(btnID == RIGHT_BUTTON){
-		   
+		   lv_textarea_cursor_right(ta);
 	   }else if(btnID == LEFT_BRACKET_BUTTON){
 		   lv_textarea_add_text(ta,"[");
 	   }else if(btnID == NINE_BUTTON){
@@ -129,7 +140,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
 	   }else if(btnID == DOT_SIGN_BUTTON){
 		   lv_textarea_add_text(ta,".");
 	   }else if(btnID == CLEAR_BUTTON){
-		   lv_textarea_set_text(ta,"")
+		   lv_textarea_set_text(ta,"");
 	   }else if(btnID == DELETE_BUTTON){
 		   lv_textarea_del_char(ta);
 	   }else if(btnID == RIGHT_BRACKET_BUTTON){
@@ -183,7 +194,24 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
   
 	
 }
+static void output_ta_event_handler(lv_event_t* e){
 
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t* ta = lv_event_get_target(e);
+    lv_obj_t* parent = lv_obj_get_parent(ta);
+	if(!lv_obj_is_visible(ta)){
+		return;
+	}
+	#if ENABLE_MCP_KEYPAD
+   	if(code == LV_EVENT_KEY_PRESSED){
+	   int btnID = *(int*)lv_event_get_param(e);
+	   if(btnID == UP_BUTTON){
+		   lv_textarea_cursor_up(ta);
+	   }else if(btdID == DOWN_BUTTON){
+		   lv_textarea_cursor_down(ta);
+	   }
+	}
+}
 
 
 
