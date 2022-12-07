@@ -188,7 +188,7 @@ static void Calculator::input_ta_event_handler(lv_event_t* e)
   
 	
 }
-static void output_ta_event_handler(lv_event_t* e){
+static void Calculator::output_ta_event_handler(lv_event_t* e){
 
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t* ta = lv_event_get_target(e);
